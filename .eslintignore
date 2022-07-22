@@ -1,8 +1,0 @@
-coverage
-.yarn
-node_modules
-lnd
-lib
-dist
-rollup.config*.js
-*.js

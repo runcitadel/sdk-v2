@@ -1,9 +1,9 @@
-import {ApiConnection} from '../common/connection.js';
-import {RequestFunction} from 'src/common/types.js';
-import {ManagerApps} from './apps.js';
-import {ManagerAuth} from './auth.js';
-import {ManagerExternal} from './external.js';
-import {ManagerSystem} from './system.js';
+import {ApiConnection} from '../common/connection.ts';
+import {RequestFunction} from '../common/types.ts';
+import {ManagerApps} from './apps.ts';
+import {ManagerAuth} from './auth.ts';
+import {ManagerExternal} from './external.ts';
+import {ManagerSystem} from './system.ts';
 
 export class Manager extends ApiConnection {
   readonly auth: ManagerAuth;

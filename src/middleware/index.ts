@@ -1,9 +1,9 @@
-import {ApiConnection} from '../common/connection.js';
-import {RequestFunction} from 'src/common/types.js';
-import {MiddlewareBitcoin} from './bitcoin.js';
-import {MiddlewareLND} from './lnd.js';
-import {MiddlewareLiquid} from './liquid';
-import {MiddlewarePages} from './pages.js';
+import {ApiConnection} from '../common/connection.ts';
+import {RequestFunction} from '../common/types.ts';
+import {MiddlewareBitcoin} from './bitcoin.ts';
+import {MiddlewareLND} from './lnd.ts';
+import {MiddlewareLiquid} from './liquid.ts';
+import {MiddlewarePages} from './pages.ts';
 
 export class Middleware extends ApiConnection {
   readonly pages: MiddlewarePages;

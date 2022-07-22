@@ -1,5 +1,5 @@
-import {ApiConnection} from '../common/connection.js';
-import {joinUrl} from '../common/utils.js';
+import {ApiConnection} from '../common/connection.ts';
+import {joinUrl} from '../common/utils.ts';
 
 /** A user.json file on Citadel. Some data may automatically be added and not actually in the file */
 export type user = {

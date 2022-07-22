@@ -1,6 +1,6 @@
-import {ApiConnection} from '../common/connection.js';
-import {joinUrl} from '../common/utils.js';
-import type {app} from '../common/types';
+import {ApiConnection} from '../common/connection.ts';
+import {joinUrl} from '../common/utils.ts';
+import type {app} from '../common/types.ts';
 
 export class ManagerApps extends ApiConnection {
   constructor(baseUrl: string) {

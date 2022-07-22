@@ -1,5 +1,5 @@
-import {ApiConnection} from '../common/connection.js';
-import {joinUrl} from '../common/utils.js';
+import {ApiConnection} from '../common/connection.ts';
+import {joinUrl} from '../common/utils.ts';
 
 export type LnAddressSignupResponse =
   | 'Address added successfully'

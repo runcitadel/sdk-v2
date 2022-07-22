@@ -1,5 +1,5 @@
-import {ApiConnection} from '../common/connection.js';
-import {joinUrl} from '../common/utils.js';
+import {ApiConnection} from '../common/connection.ts';
+import {joinUrl} from '../common/utils.ts';
 import type {
   backupStatus,
   connectionDetails,
@@ -10,7 +10,7 @@ import type {
   RpcConnectionDetails,
   updateStatus,
   versionFile,
-} from '../common/types';
+} from '../common/types.ts';
 
 export class ManagerSystem extends ApiConnection {
   constructor(baseUrl: string) {

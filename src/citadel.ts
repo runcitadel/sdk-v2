@@ -1,7 +1,7 @@
-import {Manager} from './manager/index.js';
-import {Middleware} from './middleware/index.js';
-import {joinUrl} from './common/utils.js';
-import {RequestFunction} from './common/types.js';
+import {Manager} from './manager/index.ts';
+import {Middleware} from './middleware/index.ts';
+import {joinUrl} from './common/utils.ts';
+import {RequestFunction} from './common/types.ts';
 
 export default class Citadel {
   readonly manager;
@@ -38,7 +38,9 @@ export default class Citadel {
     };
     try {
       lightning = await this.middleware.lightning.info.getStatus();
-    } catch {}
+    } catch {
+      // Ignore errors
+    }
 
     return {
       manager,

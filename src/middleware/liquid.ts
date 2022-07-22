@@ -1,12 +1,12 @@
-import {ApiConnection} from '../common/connection.js';
-import {joinUrl} from '../common/utils.js';
+import {ApiConnection} from '../common/connection.ts';
+import {joinUrl} from '../common/utils.ts';
 import {
   ChainInfo,
   MempoolInfo,
   MiningInfo,
   NetworkInfo,
   Transaction as LiquidTransaction,
-} from './liquid-types';
+} from './liquid-types.ts';
 
 export type SyncStatus = {
   chain: string;

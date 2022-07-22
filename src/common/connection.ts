@@ -1,7 +1,5 @@
-/// <reference lib="dom" />
-
-import {joinUrl} from './utils.js';
-import {RequestFunction} from './types.js';
+import {joinUrl} from './utils.ts';
+import {RequestFunction} from './types.ts';
 
 export abstract class ApiConnection {
   private readonly _baseUrl: string;

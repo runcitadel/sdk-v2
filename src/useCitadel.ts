@@ -1,5 +1,5 @@
-import Citadel from './citadel.js';
-import {useRef} from 'react';
+import Citadel from './citadel.ts';
+import {useRef} from "https://esm.sh/react@18.2.0";
 
 /**
  * React hook for the Citadel SDK
