@@ -5,15 +5,11 @@
 The Citadel SDK allows you to easily interact with a Citadel node on the local network in your app.
 It can power your app, but will also be used in the new Citadel dashboard and mobile app.
 
-### Note about ES Modules
-
-This package uses ES Modules. It can only be imported in projects using ESM. Trying to `require()` it will fail.
-
 
 ### Simple example
 
 ```JavaScript
-import {Citadel} from "@runcitadel/sdk";
+import {Citadel} from "https://deno.land/x/citadel/mod.ts";
 
 console.log("Initializing testing...");
 // Try to discover a Citadel
