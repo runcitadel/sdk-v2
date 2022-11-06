@@ -65,6 +65,7 @@ export type Transaction = {
   rawtx: string;
 };
 
+
 export class ManagerBitcoin extends ApiConnection {
   constructor(baseUrl: string) {
     super(joinUrl(baseUrl, `v2/bitcoin`));
