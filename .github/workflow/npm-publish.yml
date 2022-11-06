@@ -1,0 +1,34 @@
+name: Publish to NPM
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+
+      - uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.27.0
+
+      - name: Get tag version
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_tag_version
+        run: echo "TAG_VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+  
+      - name: Build using DNT
+        run: deno run -A scripts/build_npm.ts ${{steps.get_tag_version.outputs.TAG_VERSION}}
+
+      - name: Publish on npm
+        run: |
+             cd npm
+             npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
