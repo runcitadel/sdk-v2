@@ -2,20 +2,17 @@ import {ApiConnection} from '../common/connection.ts';
 import {RequestFunction} from '../common/types.ts';
 import {MiddlewareBitcoin} from './bitcoin.ts';
 import {MiddlewareLND} from './lnd.ts';
-import {MiddlewareLiquid} from './liquid.ts';
 import {MiddlewarePages} from './pages.ts';
 
 export class Middleware extends ApiConnection {
   readonly pages: MiddlewarePages;
   readonly bitcoin: MiddlewareBitcoin;
   readonly lightning: MiddlewareLND;
-  readonly liquid: MiddlewareLiquid;
   constructor(baseUrl: string) {
     super(baseUrl);
     this.pages = new MiddlewarePages(baseUrl);
     this.bitcoin = new MiddlewareBitcoin(baseUrl);
     this.lightning = new MiddlewareLND(baseUrl);
-    this.liquid = new MiddlewareLiquid(baseUrl);
   }
 
   /**
@@ -48,7 +45,6 @@ export class Middleware extends ApiConnection {
     this.bitcoin.jwt =
       this.pages.jwt =
       this.lightning.jwt =
-      this.liquid.jwt =
       this._jwt =
         newJwt;
   }
@@ -57,7 +53,6 @@ export class Middleware extends ApiConnection {
     this.bitcoin.requestFunc =
       this.pages.requestFunc =
       this.lightning.requestFunc =
-      this.liquid.requestFunc =
       this._requestFunc =
         requestFunc;
   }
@@ -66,7 +61,6 @@ export class Middleware extends ApiConnection {
     this.bitcoin.onAuthFailed =
       this.pages.onAuthFailed =
       this.lightning.onAuthFailed =
-      this.liquid.onAuthFailed =
       this._onAuthFailed =
         callback;
   }
