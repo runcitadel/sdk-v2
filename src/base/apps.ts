@@ -4,7 +4,7 @@ import type {app} from '../common/types.ts';
 
 export class ManagerApps extends ApiConnection {
   constructor(baseUrl: string) {
-    super(joinUrl(baseUrl, 'v1/apps'));
+    super(joinUrl(baseUrl, 'v2/apps'));
   }
 
   /**

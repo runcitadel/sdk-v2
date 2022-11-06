@@ -2,12 +2,9 @@ import {ApiConnection} from '../common/connection.ts';
 import {joinUrl} from '../common/utils.ts';
 import type {
   backupStatus,
-  connectionDetails,
   debugStatus,
   systemStatus,
-  LndConnectionDetails,
   memUsage,
-  RpcConnectionDetails,
   updateStatus,
   versionFile,
 } from '../common/types.ts';
@@ -28,24 +25,6 @@ export class ManagerSystem extends ApiConnection {
 
   async getHiddenServiceUrl(): Promise<string> {
     return (await this.get<{url: string}>('dashboard-hidden-service')).url;
-  }
-
-  async getElectrumConnectionDetails(): Promise<connectionDetails> {
-    return await this.get<connectionDetails>('electrum-connection-details');
-  }
-
-  async getBitcoinP2PConnectionDetails(): Promise<connectionDetails> {
-    return await this.get<connectionDetails>('bitcoin-p2p-connection-details');
-  }
-
-  async getBitcoinRPConnectionDetails(): Promise<RpcConnectionDetails> {
-    return await this.get<RpcConnectionDetails>(
-      'bitcoin-rpc-connection-details',
-    );
-  }
-
-  async getLndConnectUrls(): Promise<LndConnectionDetails> {
-    return await this.get<LndConnectionDetails>('lndconnect-urls');
   }
 
   async getUpdate(): Promise<false | versionFile> {
@@ -112,7 +91,7 @@ export class ManagerSystem extends ApiConnection {
     return (await this.get<{channel: string}>('update-channel')).channel;
   }
 
-  async setUpdateChannel(channel: string): Promise<void> {
+  setUpdateChannel(channel: string): Promise<void> {
     return this.put('update-channel', {
       channel,
     });

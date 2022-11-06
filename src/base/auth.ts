@@ -1,3 +1,4 @@
+import type Citadel from "../citadel.ts";
 import {ApiConnection} from '../common/connection.ts';
 import {joinUrl} from '../common/utils.ts';
 
@@ -15,8 +16,8 @@ export type changePasswordStatus = {
 };
 
 export class ManagerAuth extends ApiConnection {
-  constructor(baseUrl: string) {
-    super(joinUrl(baseUrl, `v1/account`));
+  constructor(baseUrl: string, private _parent?: Citadel) {
+    super(joinUrl(baseUrl, `v2/account`));
   }
 
   /**
@@ -37,6 +38,9 @@ export class ManagerAuth extends ApiConnection {
     if (typeof data !== 'object' || data === null || !data.jwt) {
       throw new Error('Failed to login.');
     }
+    if (this._parent) {
+      this._parent.jwt = data.jwt;
+    }
     return data.jwt;
   }
 
@@ -49,6 +53,9 @@ export class ManagerAuth extends ApiConnection {
     const data = await this.post<{jwt: string}>('refresh');
     if (typeof data !== 'object' || data === null || !data.jwt) {
       throw new Error('Failed to login.');
+    }
+    if (this._parent) {
+      this._parent.jwt = data.jwt;
     }
     return data.jwt;
   }

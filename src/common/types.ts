@@ -17,9 +17,9 @@ export type MetadataV4 = {
    */
   gallery?: string[];
   /**
-   * The app id, only set in output
+   * The app id
    */
-  id?: string;
+  id: string;
   /**
    * For "virtual" apps, the service the app implements
    */

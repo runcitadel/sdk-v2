@@ -1,18 +1,39 @@
-import {Manager} from './manager/index.ts';
-import {Middleware} from './middleware/index.ts';
-import {joinUrl} from './common/utils.ts';
-import {RequestFunction} from './common/types.ts';
+import { joinUrl } from "./common/utils.ts";
+import { RequestFunction } from "./common/types.ts";
+import { ManagerApps } from "./base/apps.ts";
+import { ManagerAuth } from "./base/auth.ts";
+import { ManagerBitcoin } from "./base/bitcoin.ts";
+import { ManagerElectrum } from "./base/electrum.ts";
+import { ManagerExternal } from "./base/external.ts";
+import { ManagerSystem } from "./base/system.ts";
+import { MiddlewareLND } from "./lightning/lnd.ts";
+import { ApiV2 } from "./base/index.ts";
+import { Middleware } from "./lightning/index.ts";
 
 export default class Citadel {
-  readonly manager;
-  readonly middleware;
-  private _jwt = '';
+  readonly auth: ManagerAuth;
+  readonly apps: ManagerApps;
+  readonly bitcoin: ManagerBitcoin;
+  readonly electrum: ManagerElectrum;
+  readonly external: ManagerExternal;
+  readonly system: ManagerSystem;
+  readonly lightning: MiddlewareLND;
+  private _jwt = "";
+  private _v2Api: ApiV2;
+  private _middleware: Middleware;
 
   constructor(baseUrl: string) {
-    const middlewareApi = joinUrl(baseUrl, 'api');
-    const managerApi = joinUrl(baseUrl, 'manager-api');
-    this.manager = new Manager(managerApi.toString());
-    this.middleware = new Middleware(middlewareApi.toString());
+    const v2Api = joinUrl(baseUrl, "api-v2");
+    this._v2Api = new ApiV2(v2Api);
+    this.auth = new ManagerAuth(v2Api, this);
+    this.apps = new ManagerApps(v2Api);
+    this.bitcoin = new ManagerBitcoin(v2Api);
+    this.electrum = new ManagerElectrum(v2Api);
+    this.external = new ManagerExternal(v2Api);
+    this.system = new ManagerSystem(v2Api);
+    const middlewareApi = joinUrl(baseUrl, "api");
+    this._middleware = new Middleware(middlewareApi.toString());
+    this.lightning = new MiddlewareLND(middlewareApi.toString());
   }
 
   /**
@@ -27,8 +48,8 @@ export default class Citadel {
       unlocked: boolean;
     };
   }> {
-    const manager = await this.manager.isOnline();
-    const middleware = await this.middleware.isOnline();
+    const manager = await this._v2Api.isOnline();
+    const middleware = await this._middleware.isOnline();
     let lightning: {
       operational: boolean;
       unlocked: boolean;
@@ -37,7 +58,7 @@ export default class Citadel {
       unlocked: false,
     };
     try {
-      lightning = await this.middleware.lightning.info.getStatus();
+      lightning = await this.lightning.info.getStatus();
     } catch {
       // Ignore errors
     }
@@ -50,51 +71,40 @@ export default class Citadel {
     };
   }
 
-  /**
-   * Login to the node.
-   * @param password The users password
-   * @param savePw Whether to save the password for later use
-   */
-  public async login(password: string, totpToken: string): Promise<void> {
-    this.jwt = await this.manager.auth.login(password, totpToken);
-  }
-
-  /**
-   * Refresh the stored JWT
-   */
-  public async refresh(): Promise<void> {
-    this.jwt = await this.manager.auth.refresh();
-  }
-
   public get jwt(): string {
     return this._jwt;
   }
 
   public set jwt(newJwt: string) {
-    this._jwt = this.manager.jwt = this.middleware.jwt = newJwt;
+    this._jwt =
+      this.apps.jwt =
+      this.auth.jwt =
+      this.bitcoin.jwt =
+      this.electrum.jwt =
+      this.external.jwt =
+      this.lightning.jwt =
+        newJwt;
   }
 
   public set requestFunc(requestFunc: RequestFunction) {
-    this.manager.requestFunc = this.middleware.requestFunc = requestFunc;
+    this.requestFunc =
+      this.apps.requestFunc =
+      this.auth.requestFunc =
+      this.bitcoin.requestFunc =
+      this.electrum.requestFunc =
+      this.external.requestFunc =
+      this.lightning.requestFunc =
+        requestFunc;
   }
 
   public set onAuthFailed(callback: (url: string) => void) {
-    this.manager.onAuthFailed = this.middleware.onAuthFailed = callback;
-  }
-
-  /**
-   * Try to discover a node on the network
-   * @returns The discovered node or false if none found
-   */
-  public static async discover(): Promise<string | false> {
-    for (const hostname of ['citadel.local', 'citadel']) {
-      try {
-        await fetch(`http://${hostname}`);
-        return hostname;
-      } catch {
-        continue;
-      }
-    }
-    return false;
+    this.onAuthFailed =
+      this.apps.onAuthFailed =
+      this.auth.onAuthFailed =
+      this.bitcoin.onAuthFailed =
+      this.electrum.onAuthFailed =
+      this.external.onAuthFailed =
+      this.lightning.onAuthFailed =
+        callback;
   }
 }
