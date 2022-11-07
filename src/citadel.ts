@@ -9,6 +9,7 @@ import { ManagerSystem } from "./base/system.ts";
 import { MiddlewareLND } from "./lightning/lnd.ts";
 import { ApiV2 } from "./base/index.ts";
 import { Middleware } from "./lightning/index.ts";
+import { MiddlewarePages } from "./lightning/pages.ts";
 
 export default class Citadel {
   readonly auth: ManagerAuth;
@@ -18,6 +19,7 @@ export default class Citadel {
   readonly external: ManagerExternal;
   readonly system: ManagerSystem;
   readonly lightning: MiddlewareLND;
+  readonly pages: MiddlewarePages;
   private _jwt = "";
   private _v2Api: ApiV2;
   private _middleware: Middleware;
@@ -34,6 +36,7 @@ export default class Citadel {
     const middlewareApi = joinUrl(baseUrl, "api");
     this._middleware = new Middleware(middlewareApi.toString());
     this.lightning = new MiddlewareLND(middlewareApi.toString());
+    this.pages = new MiddlewarePages(middlewareApi.toString());
   }
 
   /**
@@ -83,6 +86,7 @@ export default class Citadel {
       this.electrum.jwt =
       this.external.jwt =
       this.lightning.jwt =
+      this.pages.jwt =
         newJwt;
   }
 
@@ -94,6 +98,7 @@ export default class Citadel {
       this.electrum.requestFunc =
       this.external.requestFunc =
       this.lightning.requestFunc =
+      this.pages.requestFunc =
         requestFunc;
   }
 
@@ -105,6 +110,7 @@ export default class Citadel {
       this.electrum.onAuthFailed =
       this.external.onAuthFailed =
       this.lightning.onAuthFailed =
+      this.pages.onAuthFailed =
         callback;
   }
 }
