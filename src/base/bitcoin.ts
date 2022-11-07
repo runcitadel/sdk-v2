@@ -102,6 +102,10 @@ export class ManagerBitcoin extends ApiConnection {
     return this.get<string>("/version");
   }
 
+  chain() {
+    return this.get<ChainInfo>(`/chain`);
+  }
+
   blocks(from: number, to: number): Promise<BasicBlock[]> {
     return this.get<BasicBlock[]>(`/blocks?from=${from}&to=${to}`);
   }
