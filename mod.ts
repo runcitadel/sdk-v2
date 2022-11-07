@@ -1,7 +1,7 @@
 import Citadel from './src/citadel.ts';
 
 export * from './src/base/index.ts';
-export * from './src/middleware/index.ts';
+export * from './src/lightning/index.ts';
 export * from './src/base/apps.ts';
 export * from './src/base/auth.ts';
 export * from './src/base/electrum.ts';
