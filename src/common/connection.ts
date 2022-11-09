@@ -87,10 +87,6 @@ export abstract class ApiConnection {
       throw new Error(`Received invalid data: ${data}`);
     }
 
-    if (typeof parsed === 'string') {
-      throw new Error(parsed);
-    }
-
     return parsed as ResponseType;
   }
 
