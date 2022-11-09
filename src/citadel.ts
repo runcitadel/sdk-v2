@@ -79,8 +79,7 @@ export default class Citadel {
   }
 
   public set jwt(newJwt: string) {
-    this._jwt =
-      this.apps.jwt =
+    this.apps.jwt =
       this.auth.jwt =
       this.bitcoin.jwt =
       this.electrum.jwt =
@@ -91,8 +90,7 @@ export default class Citadel {
   }
 
   public set requestFunc(requestFunc: RequestFunction) {
-    this.requestFunc =
-      this.apps.requestFunc =
+    this.apps.requestFunc =
       this.auth.requestFunc =
       this.bitcoin.requestFunc =
       this.electrum.requestFunc =
@@ -103,8 +101,7 @@ export default class Citadel {
   }
 
   public set onAuthFailed(callback: (url: string) => void) {
-    this.onAuthFailed =
-      this.apps.onAuthFailed =
+    this.apps.onAuthFailed =
       this.auth.onAuthFailed =
       this.bitcoin.onAuthFailed =
       this.electrum.onAuthFailed =
