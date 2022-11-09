@@ -86,6 +86,7 @@ export default class Citadel {
       this.external.jwt =
       this.lightning.jwt =
       this.pages.jwt =
+      this.system.jwt =
         newJwt;
   }
 
@@ -97,6 +98,7 @@ export default class Citadel {
       this.external.requestFunc =
       this.lightning.requestFunc =
       this.pages.requestFunc =
+      this.system.requestFunc =
         requestFunc;
   }
 
@@ -108,6 +110,7 @@ export default class Citadel {
       this.external.onAuthFailed =
       this.lightning.onAuthFailed =
       this.pages.onAuthFailed =
+      this.system.onAuthFailed =
         callback;
   }
 }
