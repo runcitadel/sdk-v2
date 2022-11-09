@@ -121,4 +121,17 @@ export class ManagerBitcoin extends ApiConnection {
   rpcConnectionDetails() {
     return this.get<RpcConnectionDetails>(`/connection-details/rpc`);
   }
+
+  stats() {
+    return this.get<{
+      blockchainInfo: ChainInfo;
+      networkInfo: NetworkInfo;
+      mempoolInfo: MempoolInfo;
+      miningInfo: MiningInfo;
+    }>('/stats');
+  }
+
+  chainHeight() {
+    return this.get<number>('/max-header');
+  }
 }
