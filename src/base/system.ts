@@ -102,6 +102,11 @@ export class ManagerSystem extends ApiConnection {
       (await this.get<{os: 'Citadel OS' | 'unknown'}>('/')).os === 'Citadel OS'
     );
   }
+  
+  
+  getLndConnectUrls() {
+    return this.get<LndConnectionDetails>('lndconnect-urls');
+  }
 
   async i2pCredentials() {
     return await this.get<{
