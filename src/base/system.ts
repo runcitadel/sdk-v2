@@ -7,6 +7,7 @@ import type {
   memUsage,
   updateStatus,
   versionFile,
+  LndConnectionDetails,
 } from '../common/types.ts';
 
 export class ManagerSystem extends ApiConnection {
