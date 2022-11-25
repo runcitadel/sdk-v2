@@ -1,10 +1,10 @@
-import {ApiConnection} from '../common/connection.ts';
-import {joinUrl} from '../common/utils.ts';
-import type {app} from '../common/types.ts';
+import { ApiConnection } from "../common/connection.ts";
+import { joinUrl } from "../common/utils.ts";
+import type { app } from "../common/types.ts";
 
 export class ManagerApps extends ApiConnection {
   constructor(baseUrl: string) {
-    super(joinUrl(baseUrl, 'v2/apps'));
+    super(joinUrl(baseUrl, "v2/apps"));
   }
 
   /**
@@ -13,9 +13,9 @@ export class ManagerApps extends ApiConnection {
    * @param installed Set this to true if you only want a list of installed apps
    * @returns A list of apps with metadata
    */
-  async list(installed = false): Promise<{apps: app[]; jwt: string}> {
-    let {apps, jwt} = await this.get<{apps: app[]; jwt: string}>(
-      installed ? '/?installed=1' : '/',
+  async list(installed = false): Promise<{ apps: app[]; jwt: string }> {
+    let { apps, jwt } = await this.get<{ apps: app[]; jwt: string }>(
+      installed ? "/?installed=1" : "/",
     );
 
     apps = apps.map((app) => ({
@@ -23,7 +23,7 @@ export class ManagerApps extends ApiConnection {
       compatible: app.compatible ?? true,
     }));
 
-    return {apps, jwt};
+    return { apps, jwt };
   }
 
   /**
@@ -81,5 +81,28 @@ export class ManagerApps extends ApiConnection {
         }
       >
     >(`/updates`);
+  }
+
+  async addStore(repo: string, branch: string): Promise<void> {
+    await this.post("/sources", {
+      repo,
+      branch,
+    });
+  }
+
+  getStores() {
+    return this.get<{
+      id: string;
+      name: string;
+      tagline: string;
+      icon: string;
+      developers: string;
+      license: string;
+      apps: Record<string, string>;
+      commit: string;
+      repo: string;
+      branch: string;
+      subdir: string;
+    }>("/stores");
   }
 }
